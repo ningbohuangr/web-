@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>旋转木马轮播图</title>
+    <link rel="stylesheet" href="css/css.css" />
+    <script src="./js/jquery-1.11.1.min.js"></script>
+</head>
+
+<body>
+    <div class="wrap" id="wrap">
+        <div class="slide" id="slide">
+            <ul>
+                <li>
+                    <a href="#"><img src="images/slidepic1.jpg" alt="" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/slidepic2.jpg" alt="" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/slidepic3.jpg" alt="" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/slidepic4.jpg" alt="" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/slidepic5.jpg" alt="" /></a>
+                </li>
+            </ul>
+            <div class="arrow" id="arrow">
+                <a href="javascript:;" class="prev"></a>
+                <a href="javascript:;" class="next"></a>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    var jsonData = [
+
+        {  // 2
+            width: 600,
+            top: 70,
+            left: 0,
+            opacity: .80,
+            zIndex: 3
+        },
+        {   // 3
+            width: 800,
+            top: 100,
+            left: 200,
+            opacity: 1,
+            zIndex: 4
+        },
+        {  // 4
+            width: 600,
+            top: 70,
+            left: 600,
+            opacity: .80,
+            zIndex: 3
+        },
+        {   //5
+            width: 400,
+            top: 20,
+            left: 750,
+            opacity: .20,
+            zIndex: 2
+        },
+        {   //  1
+            width: 400,
+            top: 20,
+            left: 50,
+            opacity: 0.2,
+            zIndex: 2
+        }
+    ];
+
+    $(function () {
+        // jsonData.forEach((el, index) => $("#slide li").eq(index).animate(el));
+        for (var i = 0; i < jsonData.length; i++) {
+            $("#slide li").eq(i).animate(jsonData[i]);
+        }
+        //鼠标进入,2个箭头出来
+        $("#slide").mouseenter(() => $("#arrow").animate({ opacity: 1 })).mouseleave(() => $("#arrow").animate({ opacity: 0 }));
+
+        $("#arrow .prev").click(function () {
+            console.log(jsonData);
+            jsonData.unshift(jsonData.pop());
+            jsonData.forEach((el, index) => $("#slide li").eq(index).animate(el));
+        })
+        $("#arrow .next").click(function () {
+            jsonData.push(jsonData.shift());
+            // jsonData.forEach((el, index) => $("#slide li").eq(index).animate(el));
+            for (var i = 0; i < jsonData.length; i++) {
+                $("#slide li").eq(i).animate(jsonData[i]);
+            }
+        });
+    })
+
+</script>

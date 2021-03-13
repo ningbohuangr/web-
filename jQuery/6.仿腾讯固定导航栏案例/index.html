@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>防腾讯固定导航栏</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            width: 100%;
+            padding: 0;
+            /* text-align: center; */
+
+        }
+
+        .main {
+            width: 1000px;
+            margin: 0 auto;
+            /* text-align: center; */
+        }
+    </style>
+    <script src="./../jquery-1.11.1.min.js"></script>
+</head>
+
+
+<body>
+    <div class="top">
+        <img src="images/top.png" />
+    </div>
+    <div class="nav">
+        <img src="images/nav.png" />
+    </div>
+    <div class="main">
+        <img src="images/main.png" />
+    </div>
+</body>
+
+</html>
+
+<script>
+    //滚轮事件   scroll
+    //scrollTop 不可见区域的高度
+    //html 定位方式 5种 static ,fixed,absolute ,relative,
+
+    // DOMContentLoaded 这个事件
+    //原生js里如果想实现一个类似于jq的入口函数,就使用 DOMContentLoaded
+    //事件监听 观察者模式
+    window.addEventListener("DOMContentLoaded", function () {
+
+    })
+$(window).load(function () {
+    let $height=$(".top").height();
+    $(window).on("scroll",function () {
+        let $scrollTop=$(window).scrollTop();
+        console.log($scrollTop,$height);
+        if($scrollTop>=$height){
+            $(".nav").css("position","fixed").css("top","0");
+            $(".main").css("marginTop",$(".nav").height());
+        }else{
+            $(".main").css("marginTop",0);
+            $(".nav").css("position","static");
+        }
+    })
+})
+
+</script>

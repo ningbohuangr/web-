@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 0;
+        }
+
+        .all {
+            width: 500px;
+            height: 200px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .screen {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen li {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            float: left;
+        }
+
+        .screen ul {
+            position: absolute;
+            left: 0;
+            top: 0px;
+            width: 3000px;
+        }
+
+        .all ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .all ol li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .all ol li.current {
+            background: yellow;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="all" id='all'>
+        <div class="screen">
+            <ul>
+                <li><img src="images/1.jpg" width="500" height="200" /></li>
+                <li><img src="images/2.jpg" width="500" height="200" /></li>
+                <li><img src="images/3.jpg" width="500" height="200" /></li>
+                <li><img src="images/4.jpg" width="500" height="200" /></li>
+                <li><img src="images/5.jpg" width="500" height="200" /></li>
+            </ul>
+        </div>
+        <ol>
+
+        </ol>
+    </div>
+</body>
+
+</html>
+<script src="./../jquery-1.11.1.min.js"></script>
+
+
+<script>
+    $(function () {
+        //1.把第一张克隆到最后一张
+        let $cloneImg = $("ul>li").eq(0).clone(true);
+        $("ul").append($cloneImg);
+
+        //2.让右下角的点点 出来
+        for (var i = 0; i < $("ul>li").length - 1; i++) {
+            //创建li标签
+            $("ol").append($(`<li class=${i == 0 ? 'current' : ''} >${i + 1}</li>`));
+        }
+
+        let imgIndex = 0;
+        let dianIndex = 0;
+        //3. 先写自动轮播
+        const autoPlay = () => {
+            imgIndex++;
+
+            if (imgIndex > 5) {
+                //瞬间回到0的位置
+                $("#all").find("ul").css("left", 0);
+                //从1开始
+                imgIndex = 1;
+            }
+            $("#all").find("ul").animate({ left: imgIndex * -500 });
+
+            //点也要动起来
+            dianIndex++;
+            if (dianIndex == 5) {
+                dianIndex = 0;
+            }
+            $("ol li").eq(dianIndex).addClass("current").siblings().removeClass("current");
+        }
+
+        var timer = setInterval(autoPlay, 1500);
+        $("#all").mouseenter(function () {
+            //清除定时器
+            clearInterval(timer)
+        }).mouseleave(function () {
+            timer = setInterval(autoPlay, 1500);
+        })
+        //鼠标点击
+        $("ol li").click(function () {
+            let $index = $(this).index();
+            //把当前的下标,赋值给imgIndex
+            //三国同一
+            dianIndex = imgIndex = $index - 1;
+            autoPlay();
+        })
+    })
+</script>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>旋转木马轮播图</title>
+    <link rel="stylesheet" href="css/css.css" />
+    <script src="./js/animate.tools.1.1.js"></script>
+</head>
+
+<body>
+    <div class="wrap" id="wrap">
+        <div class="slide" id="slide">
+            <ul>
+                <li><a href="#"><img src="images/slidepic1.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="images/slidepic2.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="images/slidepic3.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="images/slidepic4.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="images/slidepic5.jpg" alt="" /></a></li>
+            </ul>
+            <div class="arrow" id="arrow">
+                <a href="javascript:;" class="prev"></a>
+                <a href="javascript:;" class="next"></a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var jsonData = [
+
+            { // 3
+                width: 800,
+                top: 100,
+                left: 200,
+                opacity: 1,
+                zIndex: 4
+            },
+            { // 4
+                width: 600,
+                top: 70,
+                left: 600,
+                opacity: .80,
+                zIndex: 3
+            },
+            { //5
+                width: 400,
+                top: 20,
+                left: 750,
+                opacity: .20,
+                zIndex: 2
+            },
+            { //  1
+                width: 400,
+                top: 20,
+                left: 50,
+                opacity: 0.2,
+                zIndex: 2
+            },
+
+            { // 2
+                width: 600,
+                top: 70,
+                left: 0,
+                opacity: .80,
+                zIndex: 3
+            }
+        ];
+
+        var oWrap = document.querySelector(".wrap");
+        var oLis = oWrap.querySelectorAll("li"); //nodeList
+        var oArrow = document.querySelector(".arrow");
+
+        oLis.forEach((el, index) => {
+            animate(el, jsonData[index])
+        })
+
+        oWrap.onmouseenter = function () {
+            animate(oArrow, {
+                opacity: 1
+            });
+        }
+
+        var clickFlag = true; //节流阀
+        //左
+        oArrow.children[0].onclick = function () {
+            if (clickFlag) {
+                clickFlag = false;
+                jsonData.unshift(jsonData.pop());
+                oLis.forEach((el, index) => {
+                    animate(el, jsonData[index], function () {
+                        clickFlag = true;
+                    })
+                })
+            }
+        }
+        //右
+        oArrow.children[1].onclick = function () {
+            if (clickFlag) {
+                clickFlag = false;
+                jsonData.push(jsonData.shift())
+                oLis.forEach((el, index) => {
+                    animate(el, jsonData[index], function () {
+                        clickFlag = true;
+                    })
+                })
+            }
+        }
+    </script>
+</body>
+
+</html>
