@@ -1,0 +1,22 @@
+{
+  "name": "bar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --model development"
+  },
+  "author": "\"bohuang\"",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^5.2.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^4.40.0"
+  },
+  "dependencies": {
+    "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.2"
+  }
+}
